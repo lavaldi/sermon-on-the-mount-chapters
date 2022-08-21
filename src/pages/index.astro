@@ -1,0 +1,48 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
+import data from "../db/sermon.json";
+
+const chapters = data.map(({id, chapterName, title}) => ({id, chapterName, title}));
+---
+
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			ul {
+				list-style-type: none;
+				padding: unset;
+			}
+			ul li {
+				display: flex;
+			}
+			ul li time {
+				flex: 0 0 130px;
+				font-style: italic;
+				color: #888;
+			}
+			ul li a:visited {
+				color: #8e32dc;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<content>
+				<ul>
+					{chapters.map((chapter) => (
+						<li>
+							<a href={`/chapters/${chapter.id}`}>{`${chapter.chapterName}: ${chapter.title}`}</a>
+						</li>
+					))}
+				</ul>
+			</content>
+			<Footer />
+		</main>
+	</body>
+</html>
